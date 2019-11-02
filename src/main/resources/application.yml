@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: Auction-house
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+server:
+  servlet:
+    context-path: /api
+  port: 8080
+
+logging:
+    level:
+      root: DEBUG
