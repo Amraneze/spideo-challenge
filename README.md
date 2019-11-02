@@ -106,11 +106,16 @@ mvn test
 mvnw test
 ```
 
+## Swagger
+
+For visualizing the detailed documentation about the API, please refer to the [Project's Swagger Page](http://13.48.136.181:8080/api/swagger-ui.html#/auction-house-controller)
+
 ## Built With
 
 * [Spring-Boot](https://spring.io/projects/spring-boot) - The web framework used
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [Lombok](https://projectlombok.org/) - Library that makes the code cleaner with less efforts
+* [Swagger](https://swagger.io/tools/swagger-ui/) - Library to visual the API's endpoints
 * [With Love](https://github.com/Amraneze) - With love from Paris
 
 ## License
