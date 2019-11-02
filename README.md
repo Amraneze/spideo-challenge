@@ -92,6 +92,8 @@ docker run -p xxxx:8080 test
 ```
 >NOTE: The port exposed in Docker image is 8080, which can be changed in Dockerfile, if you need to. Otherwise, you can just change the port that you want in **xxxx** without modifying the image
 
+**You can also test using my Docker image that is running on an [AWS instance](http://13.48.136.181:8080/api/)**
+
 ### Running the tests
 
 For running the tests, you should run this maven command
