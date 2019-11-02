@@ -51,7 +51,7 @@ The software used to create this application. Feel free to download them if you 
 
 ### Installing & Running
 
-After installing all software that you need for this project. 
+After installing all software that you need for this project and setting up paths for Java and Maven in your OS's environment
 
 #### With Maven 
 You should run the following command to install the libraries needed. For that you should run this in your shell/Powershell
@@ -64,17 +64,21 @@ mvnw spring-boot:run
 ```
 Or you can build the jar with this command
 ```
-maven package 
+mvnw package 
 ```
 And then 
 ```
 java -jar target/test-0.0.1-SNAPSHOT.jar
 ```
->NOTE: You should be in the root folder of the project where you can see the file **mvnw** for Windows, for Unix based OS you should rather use **mwn**
+>NOTE: You should be in the root folder of the project where you can see the folders **src, docs and other files**
 
 #### With Docker
 
-You can run the application just with the following command
+You should build the jar before starting the build the docker image, for that you should use this command
+```
+mvnw package
+```
+After checking if the jar is built in the target folder, you may use this following command
 ```
 docker build -t test:latest .
 ```
