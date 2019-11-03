@@ -1,5 +1,7 @@
 # Spideo Java Challenge - Auction House
 
+[![CircleCI](https://circleci.com/gh/Amraneze/spideo-challenge/tree/master.svg?style=svg)](https://circleci.com/gh/Amraneze/spideo-challenge/tree/master)
+
 A java challenge sent by Spideo's Team which is about creating an REST API that manages an auction house.<br>The main functionnalities of this application are :
   
 * Create/List/Delete an(all) auction(s) house.
