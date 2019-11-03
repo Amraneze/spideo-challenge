@@ -256,6 +256,8 @@ class AuctionHouseControllerTests {
         mockedAuction.setStatus(Auction.AuctionStatus.RUNNING);
         Auction savedAuction = auctionHouseService.createAuction(auctionHouse.getId(), mockedAuction);
 
+        mockedBidder.setPrice(savedAuction.getInitialPrice() + 100d);
+
         MvcResult result = mockMvc.perform(post("/auction/house/{auctionHouseId}/{auctionId}/bid",
                     auctionHouse.getId(), savedAuction.getId())
                 .contentType("application/json")
