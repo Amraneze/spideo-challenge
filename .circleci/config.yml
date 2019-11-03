@@ -16,8 +16,20 @@ jobs:
             - ~/.m2
           key: spideo-challenge-{{ checksum "pom.xml" }}
       - run: mvn -Dmaven.test.skip=true clean package
-      - run: docker build -t test:latest .
-      - run: docker-compose up
+      # How to use Docker in CircleCi https://circleci.com/docs/2.0/building-docker-images/
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Install Docker
+          command: |
+            set -x
+            VER="19.03.4-ce"
+            curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            mv /tmp/docker/* /usr/bin
+      - run:
+          name: Build Docker image
+          command: docker build -t test:latest .
       - store_artifacts:
           path: target/classes
           destination: spideo-challenge
