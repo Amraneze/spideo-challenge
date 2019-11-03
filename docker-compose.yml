@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  Auction-house:
+    image: test:latest
+    healthcheck:
+      test: ["CMD", "curl", "-f", "localhost:8080/api/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: on-failure
