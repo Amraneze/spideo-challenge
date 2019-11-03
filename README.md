@@ -37,6 +37,7 @@ The software used to create this application. Feel free to download them if you 
 
 * Install [Docker](https://docs.docker.com/install/)
 (Optional) Install Docker Cloud CLI following the [instructions](https://docs.docker.com/docker-cloud/installing-cli/).
+* Install [Docker Compose](https://docs.docker.com/compose/) if you want to use docker compose.
 * Download [Maven](https://maven.apache.org/download.cgi) and install it.
 * Download your Java IDE (IntelliJ, Eclipse, Visual Studio, NetBeans ...).
 * Download the JDK [JDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
@@ -82,10 +83,18 @@ Then, you should make sure the image is created using
 ```
 docker images
 ```
+##### With Docker
 And finally, you can run the image and expose the port that you need instead of **xxxx** 
 ```
 docker run -p xxxx:8080 test
 ```
+
+##### With Docker Compose
+And finally, you can use docker-compose that it will run the image and also check its health
+```
+docker-compose up
+```
+
 >NOTE: The port exposed in Docker image is 8080, which can be changed in Dockerfile, if you need to. Otherwise, you can just change the port that you want in **xxxx** without modifying the image
 
 **You can also test using my Docker image that is running on an [AWS instance](http://13.48.136.181:8080/api/)**
@@ -102,7 +111,11 @@ mvn test
 mvnw test
 ```
 
-## Swagger
+## Endpoints
+
+>NOTE: Content-Type: ``application/json`` header must be present in each request to use the API.
+
+### Swagger
 
 For visualizing the detailed documentation about the API, please refer to the [Project's Swagger Page](http://13.48.136.181:8080/api/swagger-ui.html#/auction-house-controller)
 
