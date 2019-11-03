@@ -63,6 +63,10 @@ public class Auction implements Base {
         return this;
     }
 
+    public void setCurrentPriceIfZero() {
+        this.currentPrice = Double.compare(this.currentPrice, 0.0) == 0 ? this.initialPrice : this.currentPrice;
+    }
+
     public enum AuctionStatus {
         NOT_STARTED,
         RUNNING,

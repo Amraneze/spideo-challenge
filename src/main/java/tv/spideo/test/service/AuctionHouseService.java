@@ -110,6 +110,8 @@ public class AuctionHouseService {
         return auctionHouseRepository.findAuctionHouseById(auctionHouseId)
                 .map((auctionHouse) -> {
                     auction.setId(CommonUtils.generateUUID());
+                    // We need to set the current price to the initial price if it's null
+                    auction.setCurrentPriceIfZero();
                     auctionHouse.addAuction(auction);
                     auctionHouseRepository.saveAuctionHouse(auctionHouse);
                     return auction;

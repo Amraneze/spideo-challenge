@@ -59,16 +59,16 @@ class AuctionHouseServiceTests {
     @DisplayName("It should list all auction houses that are inserted in the db")
     void itShouldListAllAuctionHouses() {
         List<AuctionHouse> mockedAuctionHouses = TestCommonUtils.generateListOfRandomAuctionHouse()
-                .parallelStream()
+                .stream()
                 .map((auctionHouse) -> auctionHouseService.createAuctionHouse(auctionHouse))
                 .collect(Collectors.toList());
         List<AuctionHouse> auctionHouses = auctionHouseService.getAllAuctionHouses();
         Assertions.assertEquals(mockedAuctionHouses.size(), auctionHouses.size());
 
         List<AuctionHouse> sortedMockedAuctionHouses = mockedAuctionHouses
-                    .stream()
-                    .sorted(Comparator.comparing(AuctionHouse::getName))
-                    .collect(Collectors.toList());
+                .stream()
+                .sorted(Comparator.comparing(AuctionHouse::getName))
+                .collect(Collectors.toList());
 
         List<AuctionHouse> sortedAuctionHouses = auctionHouses
                 .stream()
@@ -87,7 +87,7 @@ class AuctionHouseServiceTests {
     @DisplayName("It should delete an auction house based on its id")
     void itShouldDeleteAnAuctionHouse() {
         List<AuctionHouse> mockedAuctionHouses = TestCommonUtils.generateListOfRandomAuctionHouse()
-                .parallelStream()
+                .stream()
                 .map((auctionHouse) -> auctionHouseService.createAuctionHouse(auctionHouse))
                 .collect(Collectors.toList());
         AuctionHouse randomAuctionHouse = mockedAuctionHouses.get(2);
@@ -132,7 +132,7 @@ class AuctionHouseServiceTests {
     void itShouldListAllAuctionsOfAnAuctionHouse() {
         AuctionHouse auctionHouse = auctionHouseService.createAuctionHouse(mockedAuctionHouse);
         List<Auction> mockedAuctions = TestCommonUtils.generateListOfRandomAuction(auctionHouse)
-                .parallelStream()
+                .stream()
                 .map((auction) -> auctionHouseService.createAuction(auctionHouse.getId(), auction))
                 .collect(Collectors.toList());
         List<Auction> auctions = auctionHouseService.getAuctionsByAuctionHouseId(auctionHouse.getId());
@@ -197,7 +197,6 @@ class AuctionHouseServiceTests {
     void itShouldDisplayAuctionsByStatus() {
         AuctionHouse auctionHouse = auctionHouseService.createAuctionHouse(mockedAuctionHouse);
         TestCommonUtils.generateListOfRandomAuction(auctionHouse)
-                .parallelStream()
                 .forEach((auction) -> auctionHouseService.createAuction(auctionHouse.getId(), auction));
         auctionHouseService.getAuctionsByStatus(auctionHouse.getId(), Auction.AuctionStatus.RUNNING)
                 .parallelStream()
@@ -223,6 +222,12 @@ class AuctionHouseServiceTests {
         mockedAuction = TestCommonUtils.generateRandomAuction(auctionHouse, false, 0);
         mockedAuction.setStatus(Auction.AuctionStatus.RUNNING);
         Auction auction = auctionHouseService.createAuction(auctionHouse.getId(), mockedAuction);
+
+        // FIXED one bug from the list in the issue #1
+        // We should always set the price of the bidder to be
+        // bigger than the current price of the auction
+        mockedBidder.setPrice(auction.getInitialPrice() + 100d);
+
         AuctionBidder bidder = auctionHouseService.bidOnAuction(auctionHouse.getId(), auction.getId(), mockedBidder);
 
         Assertions.assertEquals(mockedBidder.getId(), bidder.getId());
