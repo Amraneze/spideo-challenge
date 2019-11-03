@@ -15,7 +15,7 @@ jobs:
           paths:
             - ~/.m2
           key: spideo-challenge-{{ checksum "pom.xml" }}
-      - run: mvn clean package
+      - run: mvn -Dmaven.test.skip=true clean package
       - run: docker build -t test:latest .
       - run: docker-compose up
       - store_artifacts:
