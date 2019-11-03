@@ -284,9 +284,17 @@ public class AuctionHouseService {
      * @return The winner of the auction {@link AuctionBidder}
      */
     public AuctionBidder getAuctionWinner(String auctionHouseId, String auctionId) {
-        Auction auction = auctionHouseRepository.findAuctionByHouseIdAndAuctionId(auctionHouseId, auctionId)
-                .filter((_auction) -> _auction.getStatus() == Auction.AuctionStatus.TERMINATED)
-                .orElseThrow(AuctionNotFinishedException::new);
+        AuctionHouse auctionHouse = auctionHouseRepository.findAuctionHouseById(auctionHouseId)
+                .orElseThrow(AuctionHouseNotFoundException::new);
+        Auction auction = auctionHouse.getAuctions()
+                .values()
+                .stream()
+                .filter(v -> v.getId().contentEquals(auctionId))
+                .findFirst()
+                .orElseThrow(AuctionNotFoundException::new);
+        if (auction.getStatus() != Auction.AuctionStatus.TERMINATED) {
+            throw new AuctionNotFinishedException();
+        }
         return auction.getBidders()
             .get(auction
                 .getBidding()
