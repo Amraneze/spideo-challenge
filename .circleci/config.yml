@@ -1,0 +1,37 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:10
+    working_directory: ~/spideo-challenge
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - spideo-challenge-{{ checksum "pom.xml" }}
+      - run: mvn dependency:go-offline
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: spideo-challenge-{{ checksum "pom.xml" }}
+      - run: mvn clean package
+      - run: docker build -t test:latest .
+      - run: docker-compose up
+      - store_artifacts:
+          path: target/classes
+          destination: spideo-challenge
+
+  test:
+    docker:
+      - image: circleci/openjdk:10
+    working_directory: ~/spideo-challenge
+
+    steps:
+      - checkout
+      - run: mvn dependency:go-offline
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: spideo-challenge-{{ checksum "pom.xml" }}
+      - run: mvn test
