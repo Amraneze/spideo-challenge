@@ -91,7 +91,6 @@ class AuctionHouseControllerTests {
     @DisplayName("It should get all auction houses stored in db")
     void itShouldGetAllAuctionHouses() throws Exception {
         TestCommonUtils.generateListOfRandomAuctionHouse()
-                .parallelStream()
                 .forEach((auctionHouse) -> auctionHouseService.createAuctionHouse(auctionHouse));
         List<AuctionHouse> savedAuctionHouses = auctionHouseService.getAllAuctionHouses();
 
@@ -108,7 +107,6 @@ class AuctionHouseControllerTests {
     @DisplayName("it should get all auction houses by creator id")
     void itShouldGetAuctionHouseByCreatorId() throws Exception {
         TestCommonUtils.generateListOfRandomAuctionHouse()
-                .parallelStream()
                 .forEach((auctionHouse) -> auctionHouseService.createAuctionHouse(auctionHouse));
 
         List<AuctionHouse> savedAuctionHouses = auctionHouseService.getAllAuctionHouses();
@@ -131,7 +129,6 @@ class AuctionHouseControllerTests {
     @DisplayName("it should delete an auction house")
     void itShouldDeleteAnAuctionHouse() throws Exception {
         TestCommonUtils.generateListOfRandomAuctionHouse()
-                .parallelStream()
                 .forEach((auctionHouse) -> auctionHouseService.createAuctionHouse(auctionHouse));
         AuctionHouse savedAuctionHouse = auctionHouseService.getAllAuctionHouses().get(0);
 
@@ -169,7 +166,6 @@ class AuctionHouseControllerTests {
     @DisplayName("It should get all auction of a specific auction house")
     void itShouldGetAllAuctionOfAuctionHouse() throws Exception {
         TestCommonUtils.generateListOfRandomAuctionHouse()
-                .parallelStream()
                 .forEach((auctionHouse) -> auctionHouseService.createAuctionHouse(auctionHouse));
         String auctionHouseId = auctionHouseService.getAllAuctionHouses().get(0).getId();
         List<Auction> savedAuctions = auctionHouseService.getAuctionsByAuctionHouseId(auctionHouseId);
@@ -205,7 +201,7 @@ class AuctionHouseControllerTests {
     void itShouldGetAuctionHousesByStatus() throws Exception {
         AuctionHouse auctionHouse = auctionHouseService.createAuctionHouse(mockedAuctionHouse);
         List<Auction> runningAuctions = TestCommonUtils.generateListOfRandomAuction(auctionHouse)
-                .parallelStream()
+                .stream()
                 .map((auction) -> auctionHouseService.createAuction(auctionHouse.getId(), auction))
                 .filter((auction) -> auction.getStatus() == Auction.AuctionStatus.RUNNING)
                 .collect(Collectors.toList());
@@ -227,7 +223,7 @@ class AuctionHouseControllerTests {
     void itShouldUpdateAnAuctionStatus() throws Exception {
         AuctionHouse auctionHouse = auctionHouseService.createAuctionHouse(mockedAuctionHouse);
         Auction savedAuction = TestCommonUtils.generateListOfRandomAuction(auctionHouse)
-                .parallelStream()
+                .stream()
                 .map((_auction) -> auctionHouseService.createAuction(auctionHouse.getId(), _auction))
                 .findFirst()
                 .orElseThrow(AuctionNotFoundException::new);
