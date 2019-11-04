@@ -8,8 +8,6 @@ A java challenge sent by Spideo's Team which is about creating an REST API that 
 * Create/List/Delete an(all) auction(s) of a specific auction house.
 * Bid in an auction and display the winner of an auction.
 
-Check the [Spideo Java Challenge.pdf](docs/Spideo_Java_Challenge.pdf) for more detailed information.
-
 ## Getting Started
 
 ### Prerequisites
